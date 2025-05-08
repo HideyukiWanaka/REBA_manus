@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REBAスコア算出アプリ v2</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>REBAスコア算出アプリ v2</h1>
+
+    <div class="container">
+        <div class="video-container">
+            <video id="webcam" autoplay playsinline></video>
+            <canvas id="overlay"></canvas>
+        </div>
+
+        <div class="controls">
+            <button id="startButton">開始</button>
+            <button id="stopButton" disabled>停止</button>
+        </div>
+
+        <div class="score-display">
+            <h2>リアルタイムREBAスコア: <span id="rebaScore">-</span> (<span id="riskLevel">評価待ち</span>)</h2>
+            <div id="scoreChartContainer">
+                <canvas id="scoreChart"></canvas>
+            </div>
+        </div>
+
+        <div class="manual-inputs">
+            <h2>手入力補正</h2>
+            <form id="manualInputsForm">
+                <div>
+                    <label for="filmingSide">撮影側:</label>
+                    <select id="filmingSide" name="filmingSide">
+                        <option value="left" selected>左側</option>
+                        <option value="right">右側</option>
+                    </select>
+                </div>
+                <fieldset>
+                    <legend>頸部</legend>
+                    <label><input type="checkbox" name="neck_rotation"> 回旋あり</label>
+                    <label><input type="checkbox" name="neck_lateral_bending"> 側屈あり</label>
+                </fieldset>
+                <fieldset>
+                    <legend>体幹</legend>
+                    <label><input type="checkbox" name="trunk_rotation"> 回旋あり</label>
+                    <label><input type="checkbox" name="trunk_lateral_bending"> 側屈あり</label>
+                </fieldset>
+                <div>
+                    <label for="load_force">荷重/力:</label>
+                    <select id="load_force" name="load_force">
+                        <option value="0" selected>&lt;5kg</option>
+                        <option value="1">5-10kg</option>
+                        <option value="2">&gt;10kg</option>
+                    </select>
+                </div>
+                <label><input type="checkbox" name="shock_force"> 衝撃力/急激な力あり</label>
+                <fieldset>
+                    <legend>上肢</legend>
+                    <label><input type="checkbox" name="upper_arm_abduction"> 上腕外転あり</label>
+                    <label><input type="checkbox" name="shoulder_raised"> 肩挙上あり</label>
+                    <label><input type="checkbox" name="forearm_rotation"> 前腕回旋あり</label>
+                    <label><input type="checkbox" name="wrist_ulnar_radial_deviation"> 手首の尺屈/橈屈あり</label>
+                </fieldset>
+                <div>
+                    <label for="coupling_score">カップリングスコア:</label>
+                    <select id="coupling_score" name="coupling_score">
+                        <option value="0" selected>0 (良い)</option>
+                        <option value="1">1 (まあまあ)</option>
+                        <option value="2">2 (悪い)</option>
+                        <option value="3">3 (非常に悪い)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="activity_score">活動スコア:</label>
+                    <select id="activity_score" name="activity_score">
+                        <option value="0" selected>0 (静的/稀)</option>
+                        <option value="1">1 (繰り返し/頻繁)</option>
+                        <option value="2">2 (急速/極端)</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="clips-container">
+            <h2>高スコア場面クリップ</h2>
+            <div id="clipsList">
+                <!-- 録画されたクリップがここに表示される -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
