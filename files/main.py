@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="REBA Evaluation API v2")
 
-origins = ["*"] # 開発用に全て許可。本番環境では適切に設定してください。
+origins = ["https://reba-manus.onrender.com"] # 開発用に全て許可。本番環境では適切に設定してください。
 
 app.add_middleware(
     CORSMiddleware,

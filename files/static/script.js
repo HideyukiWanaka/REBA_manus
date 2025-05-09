@@ -119,7 +119,7 @@ async function sendLandmarksToBackend(landmarks) {
     const processedLandmarks = landmarks.map(lm => ({ x: lm.x, y: lm.y, z: lm.z, visibility: lm.visibility }));
 
     try {
-        const response = await fetch("http://localhost:8001/calculate_reba", {
+        const response = await fetch("https://reba-manus-backend.onrender.com", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ landmarks: processedLandmarks, manual_inputs: manualInputs, filming_side: filmingSide })
